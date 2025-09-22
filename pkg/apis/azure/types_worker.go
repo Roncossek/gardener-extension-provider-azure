@@ -5,6 +5,7 @@
 package azure
 
 import (
+	gardencorev1beta1 "github.com/gardener/gardener/pkg/apis/core/v1beta1"
 	extensionsv1alpha1 "github.com/gardener/gardener/pkg/apis/extensions/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -52,6 +53,8 @@ type MachineImage struct {
 	AcceleratedNetworking *bool
 	// Architecture is the CPU architecture of the machine image.
 	Architecture *string
+	// Capabilities of the machine image.
+	Capabilities gardencorev1beta1.Capabilities
 	// SkipMarketplaceAgreement skips the marketplace agreement check when enabled.
 	SkipMarketplaceAgreement *bool
 	// Image identifies the azure image.
