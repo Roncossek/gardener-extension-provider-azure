@@ -899,12 +899,11 @@ func Convert_azure_MachineImage_To_v1alpha1_MachineImage(in *azure.MachineImage,
 }
 
 func autoConvert_v1alpha1_MachineImageFlavor_To_azure_MachineImageFlavor(in *MachineImageFlavor, out *azure.MachineImageFlavor, s conversion.Scope) error {
-	out.Capabilities = *(*core.Capabilities)(unsafe.Pointer(&in.Capabilities))
-	out.URN = (*string)(unsafe.Pointer(in.URN))
 	out.SkipMarketplaceAgreement = (*bool)(unsafe.Pointer(in.SkipMarketplaceAgreement))
-	out.ID = (*string)(unsafe.Pointer(in.ID))
-	out.CommunityGalleryImageID = (*string)(unsafe.Pointer(in.CommunityGalleryImageID))
-	out.SharedGalleryImageID = (*string)(unsafe.Pointer(in.SharedGalleryImageID))
+	out.Capabilities = *(*v1beta1.Capabilities)(unsafe.Pointer(&in.Capabilities))
+	if err := Convert_v1alpha1_Image_To_azure_Image(&in.Image, &out.Image, s); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -914,12 +913,11 @@ func Convert_v1alpha1_MachineImageFlavor_To_azure_MachineImageFlavor(in *Machine
 }
 
 func autoConvert_azure_MachineImageFlavor_To_v1alpha1_MachineImageFlavor(in *azure.MachineImageFlavor, out *MachineImageFlavor, s conversion.Scope) error {
-	out.Capabilities = *(*core.Capabilities)(unsafe.Pointer(&in.Capabilities))
-	out.URN = (*string)(unsafe.Pointer(in.URN))
 	out.SkipMarketplaceAgreement = (*bool)(unsafe.Pointer(in.SkipMarketplaceAgreement))
-	out.ID = (*string)(unsafe.Pointer(in.ID))
-	out.CommunityGalleryImageID = (*string)(unsafe.Pointer(in.CommunityGalleryImageID))
-	out.SharedGalleryImageID = (*string)(unsafe.Pointer(in.SharedGalleryImageID))
+	out.Capabilities = *(*core.Capabilities)(unsafe.Pointer(&in.Capabilities))
+	if err := Convert_azure_Image_To_v1alpha1_Image(&in.Image, &out.Image, s); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -930,14 +928,13 @@ func Convert_azure_MachineImageFlavor_To_v1alpha1_MachineImageFlavor(in *azure.M
 
 func autoConvert_v1alpha1_MachineImageVersion_To_azure_MachineImageVersion(in *MachineImageVersion, out *azure.MachineImageVersion, s conversion.Scope) error {
 	out.Version = in.Version
-	out.URN = (*string)(unsafe.Pointer(in.URN))
 	out.SkipMarketplaceAgreement = (*bool)(unsafe.Pointer(in.SkipMarketplaceAgreement))
-	out.ID = (*string)(unsafe.Pointer(in.ID))
-	out.CommunityGalleryImageID = (*string)(unsafe.Pointer(in.CommunityGalleryImageID))
-	out.SharedGalleryImageID = (*string)(unsafe.Pointer(in.SharedGalleryImageID))
 	out.AcceleratedNetworking = (*bool)(unsafe.Pointer(in.AcceleratedNetworking))
 	out.Architecture = (*string)(unsafe.Pointer(in.Architecture))
 	out.CapabilityFlavors = *(*[]azure.MachineImageFlavor)(unsafe.Pointer(&in.CapabilityFlavors))
+	if err := Convert_v1alpha1_Image_To_azure_Image(&in.Image, &out.Image, s); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -948,14 +945,13 @@ func Convert_v1alpha1_MachineImageVersion_To_azure_MachineImageVersion(in *Machi
 
 func autoConvert_azure_MachineImageVersion_To_v1alpha1_MachineImageVersion(in *azure.MachineImageVersion, out *MachineImageVersion, s conversion.Scope) error {
 	out.Version = in.Version
-	out.URN = (*string)(unsafe.Pointer(in.URN))
 	out.SkipMarketplaceAgreement = (*bool)(unsafe.Pointer(in.SkipMarketplaceAgreement))
-	out.ID = (*string)(unsafe.Pointer(in.ID))
-	out.CommunityGalleryImageID = (*string)(unsafe.Pointer(in.CommunityGalleryImageID))
-	out.SharedGalleryImageID = (*string)(unsafe.Pointer(in.SharedGalleryImageID))
 	out.AcceleratedNetworking = (*bool)(unsafe.Pointer(in.AcceleratedNetworking))
 	out.Architecture = (*string)(unsafe.Pointer(in.Architecture))
 	out.CapabilityFlavors = *(*[]MachineImageFlavor)(unsafe.Pointer(&in.CapabilityFlavors))
+	if err := Convert_azure_Image_To_v1alpha1_Image(&in.Image, &out.Image, s); err != nil {
+		return err
+	}
 	return nil
 }
 

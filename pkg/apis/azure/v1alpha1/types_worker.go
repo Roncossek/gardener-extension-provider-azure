@@ -71,22 +71,6 @@ type MachineImage struct {
 	Image `json:",inline"`
 }
 
-// Image identifies the azure image.
-type Image struct {
-	// URN is the uniform resource name of the image, it has the format 'publisher:offer:sku:version'.
-	// +optional
-	URN *string `json:"urn,omitempty"`
-	// ID is the VM image ID.
-	// +optional
-	ID *string `json:"id,omitempty"`
-	// CommunityGalleryImageID is the Community Image Gallery image id.
-	// +optional
-	CommunityGalleryImageID *string `json:"communityGalleryImageID,omitempty"`
-	// SharedGalleryImageID is the Shared Image Gallery image id.
-	// +optional
-	SharedGalleryImageID *string `json:"sharedGalleryImageID,omitempty"`
-}
-
 // VmoDependency is dependency reference for a workerpool to a VirtualMachineScaleSet Orchestration Mode VM (VMO).
 type VmoDependency struct {
 	// PoolName is the name of the worker pool to which the VMO belong to.

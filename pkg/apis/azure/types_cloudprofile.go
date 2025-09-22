@@ -5,7 +5,7 @@
 package azure
 
 import (
-	"github.com/gardener/gardener/pkg/apis/core"
+	gardencorev1beta1 "github.com/gardener/gardener/pkg/apis/core/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -55,27 +55,11 @@ type MachineImages struct {
 type MachineImageVersion struct {
 	// Version is the version of the image.
 	Version string
-	// URN is the uniform resource name of the image, it has the format 'publisher:offer:sku:version'.
 	// TODO @Roncossek add "// deprecated" once cloudprofiles are migrated to use CapabilityFlavors
 
-	URN *string
 	// SkipMarketplaceAgreement skips the marketplace agreement check when enabled.
-	// TODO @Roncossek add "// deprecated" once cloudprofiles are migrated to use CapabilityFlavors
-
 	SkipMarketplaceAgreement *bool
 	// ID is the Shared Image Gallery image id.
-	// TODO @Roncossek add "// deprecated" once cloudprofiles are migrated to use CapabilityFlavors
-
-	ID *string
-	// CommunityGalleryImageID is the Community Image Gallery image id, it has the format '/CommunityGalleries/myGallery/Images/myImage/Versions/myVersion'
-	// TODO @Roncossek add "// deprecated" once cloudprofiles are migrated to use CapabilityFlavors
-
-	CommunityGalleryImageID *string
-	// SharedGalleryImageID is the Shared Image Gallery image id, it has the format '/SharedGalleries/sharedGalleryName/Images/sharedGalleryImageName/Versions/sharedGalleryImageVersionName'
-	// TODO @Roncossek add "// deprecated" once cloudprofiles are migrated to use CapabilityFlavors
-
-	SharedGalleryImageID *string
-	// AcceleratedNetworking is an indicator if the image supports Azure accelerated networking.
 	// TODO @Roncossek add "// deprecated" once cloudprofiles are migrated to use CapabilityFlavors
 
 	AcceleratedNetworking *bool
@@ -85,21 +69,31 @@ type MachineImageVersion struct {
 	Architecture *string
 	// CapabilityFlavors is a collection of all images for that version with capabilities.
 	CapabilityFlavors []MachineImageFlavor
+	// TODO @Roncossek add "// deprecated" once aws cloudprofiles are migrated to use CapabilityFlavors
+
+	// Image identifies the azure image.
+	Image
 }
 
 // MachineImageFlavor is a flavor of the machine image version that supports a specific set of capabilities.
 type MachineImageFlavor struct {
-	// Capabilities is the set of capabilities that are supported by the image in this set.
-	Capabilities core.Capabilities
-	// URN is the uniform resource name of the image, it has the format 'publisher:offer:sku:version'.
-	URN *string
 	// SkipMarketplaceAgreement skips the marketplace agreement check when enabled.
 	SkipMarketplaceAgreement *bool
-	// ID is the Shared Image Gallery image id.
+	// Capabilities is the set of capabilities that are supported by the image in this set.
+	Capabilities gardencorev1beta1.Capabilities
+	// Image identifies the azure image.
+	Image
+}
+
+// Image identifies the azure image.
+type Image struct {
+	// URN is the uniform resource name of the image, it has the format 'publisher:offer:sku:version'.
+	URN *string
+	// ID is the VM image ID.
 	ID *string
-	// CommunityGalleryImageID is the Community Image Gallery image id, it has the format '/CommunityGalleries/myGallery/Images/myImage/Versions/myVersion'
+	// CommunityGalleryImageID is the Community Image Gallery image id.
 	CommunityGalleryImageID *string
-	// SharedGalleryImageID is the Shared Image Gallery image id, it has the format '/SharedGalleries/sharedGalleryName/Images/sharedGalleryImageName/Versions/sharedGalleryImageVersionName'
+	// SharedGalleryImageID is the Shared Image Gallery image id.
 	SharedGalleryImageID *string
 }
 

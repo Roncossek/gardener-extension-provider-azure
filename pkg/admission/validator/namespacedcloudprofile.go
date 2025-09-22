@@ -106,12 +106,12 @@ func (p *namespacedCloudProfile) validateMachineImages(providerConfig *api.Cloud
 	machineImagesPath := field.NewPath("spec.providerConfig.machineImages")
 	for i, machineImage := range providerConfig.MachineImages {
 		idxPath := machineImagesPath.Index(i)
-		allErrs = append(allErrs, validation.ValidateProviderMachineImage(idxPath, machineImage)...)
+		allErrs = append(allErrs, validation.ValidateProviderMachineImage(machineImage, parentSpec.MachineCapabilities, idxPath)...)
 	}
 
 	profileImages := gardener.NewCoreImagesContext(machineImages)
 	parentImages := gardener.NewV1beta1ImagesContext(parentSpec.MachineImages)
-	providerImages := validation.NewProviderImagesContext(providerConfig.MachineImages)
+	providerImages := validation.NewProviderImagesContextLegacy(providerConfig.MachineImages)
 
 	for _, machineImage := range profileImages.Images {
 		// Check that for each new image version defined in the NamespacedCloudProfile, the image is also defined in the providerConfig.

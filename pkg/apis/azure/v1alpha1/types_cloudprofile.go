@@ -60,29 +60,9 @@ type MachineImageVersion struct {
 	Version string `json:"version"`
 	// TODO @Roncossek add "// deprecated" once aws cloudprofiles are migrated to use CapabilityFlavors
 
-	// URN is the uniform resource name of the image, it has the format 'publisher:offer:sku:version'.
-	// +optional
-	URN *string `json:"urn,omitempty"`
-	// TODO @Roncossek add "// deprecated" once aws cloudprofiles are migrated to use CapabilityFlavors
-
 	// SkipMarketplaceAgreement skips the marketplace agreement check when enabled.
 	// +optional
 	SkipMarketplaceAgreement *bool `json:"skipMarketplaceAgreement,omitempty"`
-	// TODO @Roncossek add "// deprecated" once aws cloudprofiles are migrated to use CapabilityFlavors
-
-	// ID is the Shared Image Gallery image id.
-	// +optional
-	ID *string `json:"id,omitempty"`
-	// TODO @Roncossek add "// deprecated" once aws cloudprofiles are migrated to use CapabilityFlavors
-
-	// CommunityGalleryImageID is the Community Image Gallery image id, it has the format '/CommunityGalleries/myGallery/Images/myImage/Versions/myVersion'
-	// +optional
-	CommunityGalleryImageID *string `json:"communityGalleryImageID,omitempty"`
-	// TODO @Roncossek add "// deprecated" once aws cloudprofiles are migrated to use CapabilityFlavors
-
-	// SharedGalleryImageID is the Shared Image Gallery image id, it has the format '/SharedGalleries/sharedGalleryName/Images/sharedGalleryImageName/Versions/sharedGalleryImageVersionName'
-	// +optional
-	SharedGalleryImageID *string `json:"sharedGalleryImageID,omitempty"`
 	// TODO @Roncossek add "// deprecated" once aws cloudprofiles are migrated to use CapabilityFlavors
 
 	// AcceleratedNetworking is an indicator if the image supports Azure accelerated networking.
@@ -95,18 +75,28 @@ type MachineImageVersion struct {
 	Architecture *string `json:"architecture,omitempty"`
 	// CapabilityFlavors is a collection of all images for that version with capabilities.
 	CapabilityFlavors []MachineImageFlavor `json:"capabilityFlavors"`
+	// TODO @Roncossek add "// deprecated" once aws cloudprofiles are migrated to use CapabilityFlavors
+
+	// Image identifies the azure image.
+	Image `json:",inline"`
 }
 
 // MachineImageFlavor is a flavor of the machine image version that supports a specific set of capabilities.
 type MachineImageFlavor struct {
-	// Capabilities is the set of capabilities that are supported by the image in this set.
-	Capabilities core.Capabilities `json:"capabilities,omitempty"`
-	// URN is the uniform resource name of the image, it has the format 'publisher:offer:sku:version'.
-	// +optional
-	URN *string `json:"urn,omitempty"`
 	// SkipMarketplaceAgreement skips the marketplace agreement check when enabled.
 	// +optional
 	SkipMarketplaceAgreement *bool `json:"skipMarketplaceAgreement,omitempty"`
+	// Capabilities is the set of capabilities that are supported by the image in this set.
+	Capabilities core.Capabilities `json:"capabilities,omitempty"`
+	// Image identifies the azure image.
+	Image `json:",inline"`
+}
+
+// Image identifies the azure image.
+type Image struct {
+	// URN is the uniform resource name of the image, it has the format 'publisher:offer:sku:version'.
+	// +optional
+	URN *string `json:"urn,omitempty"`
 	// ID is the Shared Image Gallery image id.
 	// +optional
 	ID *string `json:"id,omitempty"`
