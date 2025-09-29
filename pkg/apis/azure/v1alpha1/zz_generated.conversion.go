@@ -13,7 +13,6 @@ import (
 	unsafe "unsafe"
 
 	azure "github.com/gardener/gardener-extension-provider-azure/pkg/apis/azure"
-	core "github.com/gardener/gardener/pkg/apis/core"
 	v1beta1 "github.com/gardener/gardener/pkg/apis/core/v1beta1"
 	extensionsv1alpha1 "github.com/gardener/gardener/pkg/apis/extensions/v1alpha1"
 	conversion "k8s.io/apimachinery/pkg/conversion"
@@ -914,7 +913,7 @@ func Convert_v1alpha1_MachineImageFlavor_To_azure_MachineImageFlavor(in *Machine
 
 func autoConvert_azure_MachineImageFlavor_To_v1alpha1_MachineImageFlavor(in *azure.MachineImageFlavor, out *MachineImageFlavor, s conversion.Scope) error {
 	out.SkipMarketplaceAgreement = (*bool)(unsafe.Pointer(in.SkipMarketplaceAgreement))
-	out.Capabilities = *(*core.Capabilities)(unsafe.Pointer(&in.Capabilities))
+	out.Capabilities = *(*v1beta1.Capabilities)(unsafe.Pointer(&in.Capabilities))
 	if err := Convert_azure_Image_To_v1alpha1_Image(&in.Image, &out.Image, s); err != nil {
 		return err
 	}

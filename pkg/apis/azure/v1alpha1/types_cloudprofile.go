@@ -5,7 +5,7 @@
 package v1alpha1
 
 import (
-	"github.com/gardener/gardener/pkg/apis/core"
+	gardencorev1beta1 "github.com/gardener/gardener/pkg/apis/core/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -87,7 +87,7 @@ type MachineImageFlavor struct {
 	// +optional
 	SkipMarketplaceAgreement *bool `json:"skipMarketplaceAgreement,omitempty"`
 	// Capabilities is the set of capabilities that are supported by the image in this set.
-	Capabilities core.Capabilities `json:"capabilities,omitempty"`
+	Capabilities gardencorev1beta1.Capabilities `json:"capabilities,omitempty"`
 	// Image identifies the azure image.
 	Image `json:",inline"`
 }

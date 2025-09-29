@@ -22,17 +22,17 @@ import (
 
 // NewCloudProfileValidator returns a new instance of a cloud profile validator.
 func NewCloudProfileValidator(mgr manager.Manager) extensionswebhook.Validator {
-	return &cloudProfile{
+	return &cloudProfileValidator{
 		decoder: serializer.NewCodecFactory(mgr.GetScheme(), serializer.EnableStrict).UniversalDecoder(),
 	}
 }
 
-type cloudProfile struct {
+type cloudProfileValidator struct {
 	decoder runtime.Decoder
 }
 
 // Validate validates the given CloudProfile objects.
-func (cp *cloudProfile) Validate(_ context.Context, newObj, _ client.Object) error {
+func (cp *cloudProfileValidator) Validate(_ context.Context, newObj, _ client.Object) error {
 	cloudProfile, ok := newObj.(*core.CloudProfile)
 	if !ok {
 		return fmt.Errorf("wrong object type %T", newObj)
@@ -45,7 +45,7 @@ func (cp *cloudProfile) Validate(_ context.Context, newObj, _ client.Object) err
 
 	cpConfig, err := decodeCloudProfileConfig(cp.decoder, cloudProfile.Spec.ProviderConfig)
 	if err != nil {
-		return err
+		return fmt.Errorf("could not decode providerConfig of CloudProfile %q: %w", cloudProfile.Name, err)
 	}
 
 	capabilityDefinitions, err := gardencorev1beta1helper.ConvertV1beta1CapabilityDefinitions(cloudProfile.Spec.MachineCapabilities)

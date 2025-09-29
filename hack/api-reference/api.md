@@ -1384,7 +1384,7 @@ bool
 <td>
 <code>capabilities</code></br>
 <em>
-github.com/gardener/gardener/pkg/apis/core.Capabilities
+github.com/gardener/gardener/pkg/apis/core/v1beta1.Capabilities
 </em>
 </td>
 <td>
