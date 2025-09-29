@@ -207,7 +207,6 @@ func validateProviderImagesMapping(cpConfigImages []apisazure.MachineImages, mac
 				// validate that for each version and capabilitySet of an image in the cloud profile a
 				// corresponding provider specific image in the cloud profile config exists
 				allErrs = append(allErrs, validateImageFlavorMapping(machineImage, version, imageVersionPath, capabilityDefinitions, imageVersion)...)
-
 			} else {
 				// validate that for each version and architecture of an image in the cloud profile a
 				// corresponding provider specific image in the cloud profile config exists

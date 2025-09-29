@@ -126,7 +126,6 @@ func (p *namespacedCloudProfile) validateMachineImages(providerConfig *api.Cloud
 			continue
 		}
 		for _, version := range machineImage.Versions {
-
 			_, existsInParent := parentImages.GetImageVersion(machineImage.Name, version.Version)
 			if len(parentSpec.MachineCapabilities) == 0 {
 				for _, expectedArchitecture := range version.Architectures {
@@ -165,7 +164,6 @@ func (p *namespacedCloudProfile) validateMachineImages(providerConfig *api.Cloud
 					}
 				}
 			}
-
 		}
 	}
 	for imageIdx, machineImage := range providerConfig.MachineImages {
