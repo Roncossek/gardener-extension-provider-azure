@@ -999,7 +999,7 @@ var _ = Describe("Machines", func() {
 			})
 
 			It("should fail because the version is invalid", func() {
-				cluster = makeCluster("invalid", region, nil, nil, 0)
+				cluster = makeCluster("invalid", region, machineTypes, nil, 0)
 				workerDelegate := wrapNewWorkerDelegate(c, chartApplier, w, cluster, nil)
 
 				result, err := workerDelegate.GenerateMachineDeployments(ctx)
@@ -1062,7 +1062,7 @@ var _ = Describe("Machines", func() {
 			})
 
 			It("should fail because the machine image information cannot be found", func() {
-				cluster = makeCluster(shootVersion, region, nil, nil, 0)
+				cluster = makeCluster(shootVersion, region, machineTypes, nil, 0)
 				workerDelegate := wrapNewWorkerDelegate(c, chartApplier, w, cluster, nil)
 
 				result, err := workerDelegate.GenerateMachineDeployments(ctx)
