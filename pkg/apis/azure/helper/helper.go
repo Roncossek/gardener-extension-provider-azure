@@ -72,21 +72,6 @@ func FindAvailabilitySetByPurpose(availabilitySets []api.AvailabilitySet, purpos
 	return nil, fmt.Errorf("cannot find availability set with purpose %q", purpose)
 }
 
-// FindMachineImage takes a list of machine images and tries to find the first entry
-// whose name, version, architecture and zone matches with the given name, version, and zone. If no such entry is
-// found then an error will be returned.
-func FindMachineImage(machineImages []api.MachineImage, name, version string, architecture *string) (*api.MachineImage, error) {
-	for _, machineImage := range machineImages {
-		if machineImage.Architecture == nil {
-			machineImage.Architecture = ptr.To(v1beta1constants.ArchitectureAMD64)
-		}
-		if machineImage.Name == name && machineImage.Version == version && ptr.Equal(architecture, machineImage.Architecture) {
-			return &machineImage, nil
-		}
-	}
-	return nil, fmt.Errorf("no machine image found with name %q, architecture %q and version %q", name, *architecture, version)
-}
-
 // FindDomainCountByRegion takes a region and the domain counts and finds the count for the given region.
 func FindDomainCountByRegion(domainCounts []api.DomainCount, region string) (int32, error) {
 	for _, domainCount := range domainCounts {
@@ -182,38 +167,6 @@ func findMachineImageFlavor(
 		}
 	}
 	return nil, nil, nil
-}
-
-// FindImageFromCloudProfile takes a list of machine images, and the desired image name and version. It tries
-// to find the image with the given name, architecture and version. If it cannot be found then an error
-// is returned.
-func FindImageFromCloudProfile(cloudProfileConfig *api.CloudProfileConfig, imageName, imageVersion string, architecture *string) (*api.MachineImage, error) {
-	if cloudProfileConfig != nil {
-		for _, machineImage := range cloudProfileConfig.MachineImages {
-			if machineImage.Name != imageName {
-				continue
-			}
-			for _, version := range machineImage.Versions {
-				if imageVersion == version.Version && ptr.Equal(architecture, version.Architecture) {
-					return &api.MachineImage{
-						Name:                     imageName,
-						Version:                  version.Version,
-						AcceleratedNetworking:    version.AcceleratedNetworking,
-						Architecture:             version.Architecture,
-						SkipMarketplaceAgreement: version.SkipMarketplaceAgreement,
-						Image: api.Image{
-							URN:                     version.URN,
-							ID:                      version.ID,
-							SharedGalleryImageID:    version.SharedGalleryImageID,
-							CommunityGalleryImageID: version.CommunityGalleryImageID,
-						},
-					}, nil
-				}
-			}
-		}
-	}
-
-	return nil, fmt.Errorf("no machine image found with name %q, architecture %q and version %q", imageName, *architecture, imageVersion)
 }
 
 // IsVmoRequired determines if VMO is required. It is different from the condition in the infrastructure as this one depends on whether the infra controller
