@@ -113,7 +113,7 @@ var _ = Describe("Machines", func() {
 				namePool2           string
 				minPool2            int32
 				maxPool2            int32
-				priorityPool2       int32
+				priorityPool2       *int32
 				maxSurgePool2       intstr.IntOrString
 				maxUnavailablePool2 intstr.IntOrString
 
@@ -266,7 +266,7 @@ var _ = Describe("Machines", func() {
 				namePool2 = "pool-zones"
 				minPool2 = 30
 				maxPool2 = 45
-				priorityPool2 = 100
+				priorityPool2 = ptr.To(int32(100))
 				maxSurgePool2 = intstr.FromInt(10)
 				maxUnavailablePool2 = intstr.FromInt(15)
 
