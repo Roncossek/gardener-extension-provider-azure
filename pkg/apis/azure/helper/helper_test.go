@@ -151,17 +151,17 @@ var _ = Describe("Helper", func() {
 		capabilityDefinitions = []v1beta1.CapabilityDefinition{
 			{Name: "architecture", Values: []string{"amd64", "arm64"}},
 			{Name: "capability1", Values: []string{"value1", "value2", "value3"}},
-			{Name: azure.CapabilityNetworkName, Values: []string{azure.CapabilityNetworkAccelerated, azure.CapabilityNetworkStandard}},
+			{Name: azure.CapabilityNetworkName, Values: []string{azure.CapabilityNetworkAccelerated, azure.CapabilityNetworkBasic}},
 		}
 		machineTypeCapabilities = v1beta1.Capabilities{
 			"architecture":              []string{"amd64"},
 			"capability1":               []string{"value2"},
-			azure.CapabilityNetworkName: []string{azure.CapabilityNetworkStandard},
+			azure.CapabilityNetworkName: []string{azure.CapabilityNetworkBasic},
 		}
 		imageCapabilities = v1beta1.Capabilities{
 			"architecture":              []string{"amd64"},
 			"capability1":               []string{"value2"},
-			azure.CapabilityNetworkName: []string{azure.CapabilityNetworkStandard},
+			azure.CapabilityNetworkName: []string{azure.CapabilityNetworkBasic},
 		}
 
 		DescribeTable("#FindImageInWorkerStatus",
@@ -170,8 +170,8 @@ var _ = Describe("Helper", func() {
 
 				if acceleratedNetwork {
 					machineTypeCapabilities[azure.CapabilityNetworkName] = []string{azure.CapabilityNetworkAccelerated}
-					imageCapabilities[azure.CapabilityNetworkName] = []string{azure.CapabilityNetworkAccelerated, azure.CapabilityNetworkStandard}
-					expectedMachineImage.Capabilities[azure.CapabilityNetworkName] = []string{azure.CapabilityNetworkAccelerated, azure.CapabilityNetworkStandard}
+					imageCapabilities[azure.CapabilityNetworkName] = []string{azure.CapabilityNetworkAccelerated, azure.CapabilityNetworkBasic}
+					expectedMachineImage.Capabilities[azure.CapabilityNetworkName] = []string{azure.CapabilityNetworkAccelerated, azure.CapabilityNetworkBasic}
 				}
 
 				machineImage, err := FindImageInWorkerStatus(machineImages, name, version, architecture, machineTypeCapabilities, capabilityDefinitions)
