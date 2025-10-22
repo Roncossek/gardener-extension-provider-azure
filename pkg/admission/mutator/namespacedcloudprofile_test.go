@@ -82,7 +82,10 @@ var _ = Describe("NamespacedCloudProfile Mutator", func() {
 "apiVersion":"azure.provider.extensions.gardener.cloud/v1alpha1",
 "kind":"CloudProfileConfig",
 "machineImages":[
-  {"name":"image-1","versions":[{"version":"1.0","id":"local/image:1.0"}]}
+  {"name":"image-1","versions":[
+		{"version":"1.0","id":"local/image:1.0"},
+		{"version":"1.0","architecture": "arm64", "id":"local/image:1.0"}
+]}
 ]}`)}
 				namespacedCloudProfile.Spec.ProviderConfig = &runtime.RawExtension{Raw: []byte(`{
 "apiVersion":"azure.provider.extensions.gardener.cloud/v1alpha1",
@@ -101,6 +104,7 @@ var _ = Describe("NamespacedCloudProfile Mutator", func() {
 						"Name": Equal("image-1"),
 						"Versions": ContainElements(
 							api.MachineImageVersion{Version: "1.0", Image: api.Image{ID: ptr.To("local/image:1.0")}, Architecture: ptr.To("amd64")},
+							api.MachineImageVersion{Version: "1.0", Image: api.Image{ID: ptr.To("local/image:1.0")}, Architecture: ptr.To("arm64")},
 							api.MachineImageVersion{Version: "1.1", Image: api.Image{ID: ptr.To("local/image:1.1")}, Architecture: ptr.To("amd64")},
 						),
 					}),
@@ -128,7 +132,8 @@ var _ = Describe("NamespacedCloudProfile Mutator", func() {
 "kind":"CloudProfileConfig",
 "machineImages":[
   {"name":"image-1","versions":[{"version":"1.1","capabilityFlavors":[
-{"capabilities":{"architecture":["amd64"]},"id":"local/image:1.1"}
+{"capabilities":{"architecture":["amd64"]},"id":"local/image:1.1"},
+{"capabilities":{"architecture":["arm64"]},"id":"local/image:1.1"}
 ]}]},
   {"name":"image-2","versions":[{"version":"2.0","capabilityFlavors":[
 {"capabilities":{"architecture":["amd64"]},"id":"local/image:2.0"}
@@ -149,9 +154,16 @@ var _ = Describe("NamespacedCloudProfile Mutator", func() {
 									Image:        api.Image{ID: ptr.To("local/image:1.0")}}},
 							},
 							api.MachineImageVersion{Version: "1.1",
-								CapabilityFlavors: []api.MachineImageFlavor{{
-									Capabilities: v1beta1.Capabilities{"architecture": []string{"amd64"}},
-									Image:        api.Image{ID: ptr.To("local/image:1.1")}}},
+								CapabilityFlavors: []api.MachineImageFlavor{
+									{
+										Capabilities: v1beta1.Capabilities{"architecture": []string{"amd64"}},
+										Image:        api.Image{ID: ptr.To("local/image:1.1")},
+									},
+									{
+										Capabilities: v1beta1.Capabilities{"architecture": []string{"arm64"}},
+										Image:        api.Image{ID: ptr.To("local/image:1.1")},
+									},
+								},
 							},
 						),
 					}),
